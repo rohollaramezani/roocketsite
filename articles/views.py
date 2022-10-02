@@ -8,7 +8,10 @@ def articles(request):
     articles=Article.objects.order_by('-created_at')[:10]
     return render(request,'articles/index.html',{
         'title':'Articles',
-        'articles':articles
+        'articles':articles,
+        'mydata': [1,2,3,4],
+        'strdata':'iran food',
+        'number':24.23654
     })
 
 

@@ -1,29 +1,49 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Articles</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-       <h1>{{ title }}</h1>
-        {% if articles %}
-        <ul>
-            {% for article in articles %}
-                <li><a href='/articles/{{article.id}}'>{{ article.title }}</a></li> 
+{% extends 'articles/master.html' %}
 
-            {% endfor %}
-        </ul>
-        {% else %}
-            <p>There is not articles yet!!</p>
-        {% endif %}
-        <script src="" async defer></script>
-    </body>
-</html>
+
+{% block title %}
+    Articles
+{% endblock %}
+
+{% block content %}
+
+<h1>{{ title }}</h1>
+
+{% comment %} {% if articles %} {% endcomment %}
+{% comment %} <ul>
+    {% for article in articles %}
+        <li><a href='/articles/{{article.id}}'>{{ article.title }}</a></li> 
+
+    {% endfor %}
+</ul>
+{% else %}
+    <p>There is not articles yet!!</p>
+{% endif %}
+ {% endcomment %}
+<ul>
+    {% for article in articles %}
+        <li><a href={% url 'article' article.id %}>{{ article.title }}</a></li> 
+    {% empty %}
+         <p>There is not articles yet!!</p>
+    {% endfor %}
+
+</ul>
+<h2> Filter Tags </h2>
+<p>Mydata: {{ mydata }}</p>
+<p>Length: {{ mydata | length }}</p>
+<p>First Item: {{ mydata | first }}</p>
+<p>Last Item: {{ mydata | last }}</p>
+<p>Join Items: {{ mydata | join:'--' }}</p>
+<p>Random: {{ mydata | random }}</p>
+<p>String Data: {{ strdata }}</p>
+<p>Capital first letter: {{ strdata | capfirst }}</p>
+<p>cut letters: {{ strdata | cut:'oo' }}</p>
+<p>Check Length: {% if strdata|length >= 5 %}
+    Yesssss
+    {% endif %}
+</p>
+<p>default empty: {{ '' | default:'Nothing' }}</p>
+<p>default None: {{ None | default_if_none:'None Nothing' }}</p>
+<p>float number : {{ number | floatformat:2 }}</p>
+{% firstof var1 var2 var3 "Hello Friend" %}
+{% endblock %}
