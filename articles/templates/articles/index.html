@@ -22,7 +22,7 @@
  {% endcomment %}
 <ul>
     {% for article in articles %}
-        <li><a href={% url 'article' article.id %}>{{ article.title }}</a></li> 
+        <li><a href={% url 'articles:article' article.id %}>{{ article.title }}</a></li> 
     {% empty %}
          <p>There is not articles yet!!</p>
     {% endfor %}

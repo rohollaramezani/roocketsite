@@ -82,7 +82,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/'resourses/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
