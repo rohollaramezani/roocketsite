@@ -2,10 +2,12 @@ from django.contrib import admin
 
 # Register your models here.
 from .models import Article
+from jalali_date import datetime2jalali, date2jalali
+from jalali_date.admin import ModelAdminJalaliMixin, StackedInlineJalaliMixin, TabularInlineJalaliMixin
 
 @admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
-    list_display=('title','views','published_at','show')
+class ArticleAdmin(ModelAdminJalaliMixin,admin.ModelAdmin):
+    list_display=('title','views','get_published_jalali','show')
     date_hierarchy= 'published_at'
     search_fields=('title','body')
     list_filter=('created_at','published_at')
@@ -21,7 +23,10 @@ class ArticleAdmin(admin.ModelAdmin):
             'fields':('views','show')
             }),
     )
-
+    
+    def get_published_jalali(self, obj):
+        return datetime2jalali(obj.published_at).strftime('%y/%m/%d _ %H:%M:%S')
+    get_published_jalali.short_description="تاریخ انتشار"
     def make_hide(self,request,queryset):
         row_articles=queryset.update(show=0)
         
