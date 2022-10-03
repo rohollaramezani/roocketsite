@@ -20,6 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('articles/',include('articles.urls')),
     path('',include('website.urls')),
+    path('accounts/', include('account.urls')),
 ]
 
 handler404=website_views.handler404

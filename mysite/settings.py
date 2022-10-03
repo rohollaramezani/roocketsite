@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [ ]
 
-
+# LOGIN_REDIRECT_URL="/"
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'jalali_date',
     'articles.apps.ArticlesConfig',
     'website.apps.WebsiteConfig',
+    'account.apps.AccountConfig',
     
 ]
 # default settings
