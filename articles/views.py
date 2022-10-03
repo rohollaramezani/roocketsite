@@ -1,9 +1,9 @@
 from django.http import HttpResponse,Http404
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from .models import Article
 from django.core.paginator import Paginator
 # Create your views here.
-
+from .forms import SendArticleForm
 
 def articles(request):
     articles=Article.objects.order_by('-created_at')
@@ -33,5 +33,16 @@ def single_page(request,article_id):
 
 
 def send(request):
-    return HttpResponse(request.POST.get('title'))
-    return render(request,'articles/send.html')
+    if request.method == 'POST':
+        form=SendArticleForm(request.POST)
+        if form.is_valid():
+            Article.objects.create(
+                title=form.cleaned_data['title'],
+                body=form.cleaned_data['body'],
+                published_at=form.cleaned_data['published_at']
+            )
+            return redirect('articles:articles')
+    else:
+        form=SendArticleForm()
+        
+    return render(request,'articles/send.html',{'form':form})
