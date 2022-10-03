@@ -32,15 +32,55 @@ def single_page(request,article_id):
     })
 
 
+# def send(request):
+#     if request.method == 'POST':
+#         form=SendArticleForm(request.POST)
+#         if form.is_valid():
+#             Article.objects.create(
+#                 title=form.cleaned_data['title'],
+#                 body=form.cleaned_data['body'],
+#                 published_at=form.cleaned_data['published_at']
+#             )
+#             return redirect('articles:articles')
+#     else:
+#         form=SendArticleForm()
+        
+#     return render(request,'articles/send.html',{'form':form})
+
+# def edit(request,article_id):
+#     article = get_object_or_404(Article, id=article_id)
+    
+#     if request.method=="POST":
+#         form=SendArticleForm(request.POST)
+#         if form.is_valid():
+#             article.title=form.cleaned_data['title']
+#             article.body=form.cleaned_data['body']
+#             article.published_at= form.cleaned_data['published_at']
+#             article.save()
+#         return redirect('articles:articles')
+#     else:
+#         form=SendArticleForm(article.__dict__)
+        
+#     return render(request,'articles/edit.html',{'form':form,'article':article})
+
+def edit(request,article_id):
+    article = get_object_or_404(Article, id=article_id)
+    
+    if request.method=="POST":
+        form=SendArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:articles')
+    else:
+        form=SendArticleForm(instance=article)
+        
+    return render(request,'articles/edit.html',{'form':form,'article':article})
+
 def send(request):
     if request.method == 'POST':
         form=SendArticleForm(request.POST)
         if form.is_valid():
-            Article.objects.create(
-                title=form.cleaned_data['title'],
-                body=form.cleaned_data['body'],
-                published_at=form.cleaned_data['published_at']
-            )
+            form.save()
             return redirect('articles:articles')
     else:
         form=SendArticleForm()

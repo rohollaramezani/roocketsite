@@ -2,12 +2,12 @@
 
 
 {% block content %}
-    <h2>Send Article </h2>
-    <form action="{% url 'articles:article.send' %}" method="POST">
+    <h2>Edit Article </h2>
+    <form action="{% url 'articles:article.edit' article.id %}" method="POST">
         {% csrf_token %}
         <div class='form-group'>
             <label for='title'>title : </label>
-            <input type="text" name="title" class="form-control" {% if form.title.errors %} is-invalid {% endif %} id="title">
+            <input type="text" name="title" class="form-control" {% if form.title.errors %} is-invalid {% endif %} id="title" value="{{ article.title }}">
             
         </div>
         {% comment %} <div class="invalid-feedback"> {% endcomment %}
@@ -15,7 +15,7 @@
         {% comment %} </div> {% endcomment %}
         <div class='form-group'>
             <label for='body'>body : </label>
-            <textarea  name="body" cols="30" rows="10" class="form-control" id="body" {% if form.body.errors %} is-invalid {% endif %}></textarea>
+            <textarea  name="body" cols="30" rows="10" class="form-control" id="body" {% if form.body.errors %} is-invalid {% endif %}>{{ article.body }}</textarea>
             {% comment %} <div class="invalid-feedback"> {% endcomment %}
             {{ form.body.errors }}
             {% comment %} </div> {% endcomment %}
@@ -23,7 +23,7 @@
        
         <div class='form-group'>
             <label for='published_at'>published at:</label>
-            <input type="date" name="published_at" class="form-control" id="published_at" {% if form.published_at.errors %} is-invalid {% endif %}>
+            <input type="date" name="published_at" class="form-control" id="published_at" {% if form.published_at.errors %} is-invalid {% endif %} value="{{ article.published_at | date:'Y-m-d'}}">
             {% comment %} <div class="invalid-feedback"> {% endcomment %}
             {{ form.published_at.errors }}
             {% comment %} </div> {% endcomment %}
